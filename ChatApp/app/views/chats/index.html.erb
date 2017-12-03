@@ -1,0 +1,52 @@
+<div class="container-inbox">
+  <%= link_to 'Contact a Person', new_chat_path, class:"btn btn-default contact-btn" %>
+  <% if @chats.any? %>
+  <% @chats.each do |chat| %>
+  <% if chat.messages.any? %>
+  <div class="inbox">
+    <div class="inbox-body">
+      <h3>
+        <%= chat.name %>
+      </h3>
+      <p>
+        <%= chat.messages.last.user == current_user ? "✓✓" : "" %>
+        <%= chat.messages.last.content %>
+      </p>
+    </div>
+    <div class="inbox-status">
+      <p><%= chat.messages.last.created_at.today? ? chat.messages.last.created_at.strftime("%k:%M") : chat.messages.last.created_at.strftime("%A") %></p>
+      <h5 class='status'>
+        <!--  <%# if !chat.messages.last.read %> message.read gets set to true form the other person, because its not individual for each person so it gets setted true as soon as ones sends it from the chatroom
+         ●
+         <%# end %> -->
+       </h5>
+       <p>
+        ▷
+      </p>
+    </div>
+    <%= link_to '', chat_path(chat), class:"open-message" %>
+  </div>
+
+  <% else %>
+  <div class="inbox">
+    <div class="inbox-body">
+      <h3>
+        <%= chat.name %>
+      </h3>
+      <p><i>No messages</i></p>
+    </div>
+    <div class="inbox-status">
+      <p><%= chat.created_at.today? ? chat.created_at.strftime("%k:%M") : chat.created_at.strftime("%A") %></p>
+      <p>
+        ▷
+      </p>
+    </div>
+    <%= link_to '', chat_path(chat), class:"open-message" %>
+  </div>
+
+  <% end %>
+  <% end %>
+  <% else %>
+  <h3>No Chats</h3>
+  <% end %>
+</div>

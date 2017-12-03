@@ -1,0 +1,8 @@
+<%= simple_form_for @chat do |f| %>
+  <p>Contact a person (loged in with <%= current_user.first_name %>)</p>
+  <div class="assign-to-person-field">
+    <%= f.association :user_two, :include_blank => false, collection: User.where.not(id: current_user), label_method: :first_name %>
+    <%= f.input :user_one, :as => :hidden, :input_html => { :value => current_user.id } %>
+  </div>
+  <%= f.submit 'Contact' %>
+<% end %>
